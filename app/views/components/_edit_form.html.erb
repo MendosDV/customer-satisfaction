@@ -1,0 +1,36 @@
+  <div class="mx-60 bg-white rounded-lg drop-shadow-md p-4 mb-4">
+    <h3 class="mb-6 font-semibold text-lg mx-auto text-center">Modifier le client</h3>
+    <%= form_with model: @client, url: client_path(@client), method: :patch do |f| %>
+      <div class="mb-4 flex gap-4">
+        <div class="w-1/2">
+          <%= f.label :prénom, class: "block font-light mb-1" %>
+          <%= f.text_field :first_name, class: "w-full border rounded-md py-2 px-3 placeholder-gray-400" %>
+        </div>
+        <div class="w-1/2">
+          <%= f.label :nom, class: "block font-light mb-1" %>
+          <%= f.text_field :last_name, class: "w-full border rounded-md py-2 px-3 placeholder-gray-400" %>
+        </div>
+      </div>
+      <div class="mb-4 flex gap-4">
+        <div class="w-1/2">
+          <%= f.label :adresse, class: "block font-light mb-1" %>
+          <%= f.text_field :address, class: "w-full border rounded-md py-2 px-3 placeholder-gray-400" %>
+        </div>
+        <div class="w-1/2">
+          <%= f.label :code_postal, class: "block font-light mb-1" %>
+          <%= f.number_field :zip, class: "w-full border rounded-md py-2 px-3 placeholder-gray-400" %>
+        </div>
+      </div>
+      <div class="mb-4 flex gap-4">
+        <div class="w-1/2">
+          <%= f.label :mail, class: "block font-light mb-1" %>
+          <%= f.text_field :mail, class: "w-full border rounded-md py-2 px-3 placeholder-gray-400" %>
+        </div>
+        <div class="w-1/2">
+          <%= f.label :colocataire, class: "block font-light mb-1" %>
+          <%= f.text_field :roomate, class: "w-full border rounded-md py-2 px-3 placeholder-gray-400" %>
+        </div>
+      </div>
+      <%= f.submit "Sauvegarder", class: "bg-teal-500 text-white py-2 px-4 rounded-full hover:bg-teal-600" %>
+    <% end %>
+  </div>

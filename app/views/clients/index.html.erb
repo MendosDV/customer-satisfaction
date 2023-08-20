@@ -1,0 +1,144 @@
+<% if flash[:notice].present? %>
+  <div id="flash" class="w-2/6 z-10 bottom-0 right-0 mx-12 my-6 bg-teal-100 border-t-4 border-teal-500 rounded-b text-teal-900 px-4 py-3 shadow-md fixed" role="alert">
+    <div class="flex">
+      <div class="py-1"><svg class="fill-current h-6 w-6 text-teal-500 mr-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M2.93 17.07A10 10 0 1 1 17.07 2.93 10 10 0 0 1 2.93 17.07zm12.73-1.41A8 8 0 1 0 4.34 4.34a8 8 0 0 0 11.32 11.32zM9 11V9h2v6H9v-4zm0-6h2v2H9V5z"/></svg></div>
+      <div>
+        <p class="font-bold">Félicitation, votre nouveau client a été créé</p>
+        <p class="text-sm"><%= flash[:notice] %></p>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<% if flash[:alert].present? %>
+  <div class="fixed w-2/6 z-10 bottom-0 right-0 mx-12 my-6 bg-blue-100 border-t border-b border-blue-500 text-blue-700 px-4 py-3" role="alert">
+    <p class="font-bold">Information</p>
+    <p class="text-sm">Vous avez supprimé votre client.</p>
+  </div>
+<% end %>
+
+<div class="flex mx-auto rounded-lg bg-white p-10 mb-8 drop-shadow-lg gap-10 justify-between">
+  <div class="flex items-center border-r gap-4">
+    <img src="https://img.freepik.com/free-vector/real-estate-abstract-concept-vector-illustration-real-estate-agency-residential-industrial-commercial-property-market-investment-portfolio-home-ownership-property-value-abstract-metaphor_335657-1967.jpg?w=996&t=st=1692127798~exp=1692128398~hmac=870985b73e3071630f88a9677bbc0c7953d0f9643f6d6db0aa664110167e4f13" alt="image" width="28%">
+    <div>
+      <p class="text-slate-500">Dernières relances</p>
+      <ul>
+        <% @last_mail.each do |client| %>
+          <li class="text-sm"><%= link_to "#{client.first_name.downcase.capitalize} #{client.last_name.downcase.capitalize}", client_path(client) %> <span class="pl-2 italic grey"><%= client.last_call.strftime('%d-%m-%Y') %></span></li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+  <div class="flex items-center border-r gap-4">
+      <img src="https://img.freepik.com/free-vector/family-house-abstract-concept-vector-illustration-single-family-detached-home-family-house-single-dwelling-unit-townhouse-private-residence-mortgage-loan-down-payment-abstract-metaphor_335657-1968.jpg?w=996&t=st=1692127819~exp=1692128419~hmac=fa3ec0f3dee91a9fe0e1ff18928b3042665102a0e5cc2e3af1438eddb04281bd" alt="image" width="28%">
+      <div>
+        <p class="text-slate-500">Prochaines relances</p>
+        <ul>
+          <% @next_mail.each do |client| %>
+            <li class="text-sm"><li class="text-sm"><%= link_to "#{client.first_name.downcase.capitalize} #{client.last_name.downcase.capitalize}", client_path(client) %> <span class="pl-2 italic grey"><%= client.next_call.strftime('%d-%m-%Y') %></span></li></li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  <div class="flex items-center gap-4">
+    <img src="https://img.freepik.com/free-vector/business-seminar-staff-training-development-consultation-coaching-mentoring-cartoon-characters-listening-report-successful-businesswoman-concept-illustration_335657-2043.jpg?w=996&t=st=1692127838~exp=1692128438~hmac=45155b75809a8cbef799ecdfc66653cc20c698ff0aac0c5eca3af64062c0f750" alt="image" width="28%">
+    <div>
+      <p class="text-slate-500">30 derniers jours</p>
+      <p class="font-bold"><span class="text-4xl"><%= @sum_last_mail %></span> relances</p>
+    </div>
+  </div>
+</div>
+
+<div class="mx-auto rounded-lg bg-white p-10 mb-8 drop-shadow-lg">
+  <div class="flex justify-between items-center mb-8">
+    <div>
+      <h2 class="font-bold text-2xl">Tous vos clients</h2>
+      <p class="text-sm text-teal-500">Clients actifs</p>
+    </div>
+    <div class="flex">
+      <div>
+        <%= search_form_for @q do |f| %>
+          <%= f.search_field :first_name_or_last_name_cont, placeholder: 'Rechercher par nom', class: "focus:ring-gray-300 placeholder-gray-400 border-0 text-sm bg-slate-100 px-4 rounded-lg py-2 mx-4" %>
+        <% end %>
+      </div>
+
+      <div data-controller="dropdown" data-action="click->dropdown#clicked">
+        <button
+          id="dropdownDefaultButton"
+          data-dropdown-toggle="dropdown"
+          data-dropdown-target="button"
+          class="text-white bg-teal-500 hover:bg-teal-600 focus:ring-2 focus:outline-none focus:ring-teal-300 font-medium rounded-lg text-sm px-4 py-2 text-center inline-flex items-center dark:bg-teal-500 dark:hover:bg-teal-600 dark:focus:ring-teal-600"
+          type="button">
+          Trier par:
+          <svg class="w-2.5 h-2.5 ml-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+          </svg>
+        </button>
+
+        <div id="dropdown" data-dropdown-target="menu" class="absolute mt-2 z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
+          <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
+            <li>
+              <%= link_to "Début de contrat", { commit: "Filtrer", sort: "begin_relation asc" }, class: "block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white" %>
+            </li>
+            <li>
+              <%= link_to "Statut", { commit: "Filtrer", sort: "type_of_client asc" }, class: "block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white" %>
+            </li>
+            <li>
+              <%= link_to "Prochaine relance", { commit: "Filtrer", sort: "next_call asc" }, class: "block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white" %>
+            </li>
+            <li>
+              <%= link_to "Dernière relance", { commit: "Filtrer", sort: "last_call asc" }, class: "block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white" %>
+            </li>
+            <li>
+              <%= link_to "Code postal", { commit: "Filtrer", sort: "zip asc" }, class: "block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white" %>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <table class="table-auto">
+    <thead>
+      <tr class="border-b">
+        <th class="px-4 py-2 grey font-normal">Nom</th>
+        <th class="px-4 py-2 grey font-normal">Statut</th>
+        <th class="px-4 py-2 grey font-normal">Email</th>
+        <th class="px-4 py-2 grey font-normal">Adresse</th>
+        <%# <th class="px-4 py-2 grey font-normal">Date de début</th> %>
+        <th class="px-4 py-2 grey font-normal">Dernière relance</th>
+        <th class="px-4 py-2 grey font-normal">Prochaine relance</th>
+      </tr>
+    </thead>
+    <body>
+      <% @clients.each do |client| %>
+        <tr class="border-b text-sm">
+          <td class="px-4 py-4">
+            <%= link_to "#{client.first_name.downcase.capitalize} #{client.last_name.downcase.capitalize}", client_path(client), class: "hover:text-teal-500 hover:font-normal" %>
+            <% if client.roomate %>
+              <%= link_to "#{client.roomate}", client_path(client), class: "block text-xs grey" %>
+            <% end %>
+          </td>
+          <td class="px-4 py-2"><%= client.type_of_client %></td>
+          <td class="px-4 py-2"><%= client.mail.downcase %></td>
+          <td class="px-4 py-2"><%= client.address %> <%= client.zip %></td>
+          <%# <td class="px-4 py-2"><%= client.begin_relation.strftime('%d-%m-%Y') %>
+          <td class="px-4 py-2"><%= client.last_call.strftime('%d-%m-%Y') %></td>
+          <td class="px-4 py-2"><%= client.next_call.strftime('%d-%m-%Y') %></td>
+        </tr>
+      <% end %>
+    </body>
+  </table>
+  <div class="flex justify-end mt-8 text-sm gap-1">
+    <%= will_paginate @clients,
+      renderer: WillPaginate::ActionView::LinkRenderer,
+      previous_label: content_tag(:span, "Précédent", class: "bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded"),
+      next_label: content_tag(:span, "Suivant", class: "bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded"),
+      inner_window: 2,
+      outer_window: 1,
+      container: false,
+      page_links: false,
+      link_class: "bg-gray-200 px-3 py-1 rounded-full hover:bg-gray-300",
+      current_page: { tag: "span", class: "bg-teal-500 text-white px-3 py-1 rounded-full" }
+    %>
+  </div>
+</div>

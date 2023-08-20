@@ -1,0 +1,33 @@
+<div data-controller="edit-client">
+  <div class="mx-60 bg-white rounded-lg drop-shadow-md p-4 mb-4 show-content">
+    <div class="mx-auto flex mb-8 mt-2 font-semibold text-xl">
+      <h3 class="mx-auto">Voici la fiche de <%= @client.first_name %> (<%= content_tag :span, @client.type_of_client, class: "italic font-normal" %>)</h3>
+    </div>
+    <ul class="grid grid-cols-3 text-center gap-y-8 mb-10" >
+      <li><span class="font-semibold">Prénom</span> <p><%= @client.first_name%></p></li>
+      <li><span class="font-semibold">Nom</span> <p><%= @client.last_name%></p></li>
+      <% if @client.roomate %>
+        <li><span class="font-semibold">Colocataire</span> <p><%= @client.roomate%></p></li>
+      <% else %>
+        <li><span class="font-semibold">Colocataire</span> <p><span class="italic">pas de colocataire</span></p></li>
+      <% end %>
+      <li><span class="font-semibold">Adresse</span> <p><%= @client.address%></p></li>
+      <li><span class="font-semibold">Code postale</span> <p><%= @client.zip%></p></li>
+      <li><span class="font-semibold">Mail</span> <p><%= @client.mail%></li>
+      <li><span class="font-semibold">Date de début</span> <p><%= @client.begin_relation.strftime('%d-%m-%Y')%></p></li>
+      <li><span class="font-semibold">Dernière relance</span> <p><%= @client.last_call.strftime('%d-%m-%Y')%></p></li>
+      <li><span class="font-semibold">Prochaine relance</span> <p><%= @client.next_call.strftime('%d-%m-%Y')%></p></li>
+    </ul>
+    <div class="flex justify-center gap-4">
+      <button class="text-white bg-teal-500 px-4 py-4 drop-shadow rounded-lg hover:bg-teal-600" data-id="<%= @client.id %>" data-action="click->edit-client#edit">Modifier</button>
+      <%= link_to "Supprimer",
+        client_path(@client),
+        data: {turbo_method: :delete, turbo_confirm: "Êtes-vous sûr(e) de vouloir supprimer ce client ?"},
+        class: "text-white bg-red-400 px-4 py-4 drop-shadow rounded-lg hover:bg-red-500"
+      %>
+    </div>
+  </div>
+  <div id="client-edit-placeholder"></div>
+</div>
+
+
