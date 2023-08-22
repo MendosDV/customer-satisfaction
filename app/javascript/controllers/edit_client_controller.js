@@ -16,10 +16,7 @@
       .then(response => response.json())
       .then(data => {
         const clientEditPlaceholder = this.element.querySelector('#client-edit-placeholder');
-        console.log(clientEditPlaceholder);
-        console.log(data.partial);
         clientEditPlaceholder.innerHTML = data.partial;
-
         const showContent = document.querySelector('.show-content');
         showContent.classList.add('hidden');
       });

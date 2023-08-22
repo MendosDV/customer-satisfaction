@@ -25,3 +25,12 @@
 .hidden {
   display: none;
 }
+
+.fade-out {
+  opacity: 0;
+  transition: opacity 1.5s ease;
+}
+
+.zindex-negative {
+  z-index: -1;
+}
