@@ -8,7 +8,7 @@ class ClientsController < ApplicationController
 
     @q = Client.ransack(params[:q])
     sort_param = params[:sort] || 'created_at desc'
-    @clients = @q.result(distinct: true).order(sort_param).paginate(page: params[:page], per_page: 5)
+    @clients = @q.result(distinct: true).order(sort_param).paginate(page: params[:page], per_page: 10)
   end
 
   def show
@@ -24,12 +24,12 @@ class ClientsController < ApplicationController
     @client.next_call = @client.last_call + 6.month
 
     if @client.save
-      if @client.begin_relation >= Date.today
-        ClientMailer.with(client: @client).welcome_email.deliver_now
-        redirect_to '/', notice: "Un mail de bienvenu a été envoyé à #{@client.first_name} #{@client.last_name}"
+      if @client.type_of_client == "locataire"
+        ClientMailer.with(client: @client).welcome_tenant_email.deliver_now
       else
-        redirect_to '/', notice: "Un message sera envoyé à #{@client.first_name} #{@client.last_name} dans les prochaines semaines"
+        ClientMailer.with(client: @client).welcome_owner_email.deliver_now
       end
+      redirect_to '/', notice: "Un mail de bienvenu a été envoyé à #{@client.first_name} #{@client.last_name}"
     else
       puts @client.errors.full_messages
       render :new
@@ -62,27 +62,6 @@ class ClientsController < ApplicationController
     redirect_to clients_path, alert: "Votre client a bien été supprimé", status: :see_other
   end
 
-  # def ask_satisfaction
-  #   clients_to_notify = Client.where(next_call: Date.today)
-
-  #   clients_to_notify.each do |client|
-  #     ClientMailer.with(client: client).satisfaction_email.deliver_now
-  #     client.update(last_call: Date.today, next_call: Date.today + 180.days)
-  #   end
-  # end
-
-  # def send_test
-  #   @client = Client.all
-  #   @client.each do |client|
-  #     ClientMailer.satisfaction_email(client).deliver_now
-  #     puts "mail send to #{client.mail}"
-  #   end
-  # end
-
-  def say_hello
-    puts 'hello from whenever'
-  end
-
   private
 
   def client_params
@@ -105,5 +84,26 @@ class ClientsController < ApplicationController
     end
 
     sum_last_mail
+  end
+
+  def self.ask_satisfaction
+    puts 'Hello from Ask Satisfaction'
+    clients_to_notify = Client.where(next_call: Date.today).all
+    if clients_to_notify.count > 0
+      clients_to_notify.each do |client|
+        puts "Client #{client.first_name} #{client.last_name} selected"
+        if client.type_of_client == "locataire"
+          ClientMailer.with(client: client).satisfaction_tenant_email.deliver_now
+          puts "Mail send at #{client.mail}"
+        else
+          ClientMailer.with(client: client).satisfaction_owner_email.deliver_now
+          puts "Mail send at #{client.mail}"
+        end
+        client.update(last_call: Date.today, next_call: Date.today + 180.days)
+        puts "Last call updated at #{client.last_call} and next call updated at #{client.next_call}"
+      end
+    else
+      puts "No clients to notify"
+    end
   end
 end

@@ -1,34 +1,6 @@
-# Use this file to easily define all of your cron jobs.
-#
-# It's helpful, but not entirely necessary to understand cron before proceeding.
-# http://en.wikipedia.org/wiki/Cron
+job_type :rails_runner, %Q{cd :path && /Users/mickael/.rbenv/shims/bundler exec ./bin/rails runner -e development ':task' :output}
+set :output, './log/cron.log'
 
-# Example:
-#
-# set :output, "/path/to/my/cron_log.log"
-#
-# every 2.hours do
-#   command "/usr/bin/some_great_command"
-#   runner "MyModel.some_method"
-#   rake "some:great:rake:task"
-# end
-#
-# every 4.days do
-#   runner "AnotherModel.prune_old_records"
-# end
-
-# Learn more: http://github.com/javan/whenever
-
-# every 1.day, at: '11:00 pm' do
-#   runner 'ClientController.ask_satisfaction'
-# end
-
-# every 1.minute do
-#   runner 'Client.say_hello'
-# end
-
-# set :output, './log/cron.log'
-
-# every 1.minute do
-#   runner "puts 'Hello mendos how are you?'"
-# end
+every 1.minute do
+  rails_runner "ClientsController.ask_satisfaction"
+end
