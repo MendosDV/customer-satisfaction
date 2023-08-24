@@ -77,4 +77,5 @@ gem 'will_paginate', '~> 4.0'
 gem 'dotenv-rails'
 gem 'whenever', require: false
 gem 'bundler', '2.4.19'
+gem "devise"
 

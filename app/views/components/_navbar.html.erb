@@ -8,6 +8,23 @@
   <div class="justify-between items-center flex gap-x-6 text-sm">
     <%= link_to "Dashboard", clients_path%>
     <%= link_to "Ajouter un nouveau client", new_client_path, class: "text-white bg-teal-500 px-4 py-4 drop-shadow rounded-lg hover:bg-teal-600" %>
-    <img src="https://cdn-icons-png.flaticon.com/512/3106/3106773.png" alt="login" width="34px" class="rounded-full p-2 border border-black">
+
+    <div data-controller="dropdown" data-action="click->dropdown#toggleMenu">
+      <img src="https://cdn-icons-png.flaticon.com/512/3106/3106773.png"
+      alt="login"
+      width="34px"
+      id="dropdownDefaultButton"
+      data-dropdown-toggle="dropdown"
+      data-dropdown-target="button"
+      class="rounded-full p-2 border border-black">
+
+      <div id="dropdown" data-dropdown-target="menu" class="absolute mt-2 z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-fit dark:bg-gray-700">
+        <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
+          <li>
+            <%= link_to "Deconnexion", destroy_user_session_path, data: {turbo_method: :delete}, class: "text-xs block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white" %>
+          </li>
+        </ul>
+      </div>
+    </div>
   </div>
 </div>

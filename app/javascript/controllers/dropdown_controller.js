@@ -5,10 +5,6 @@ export default class extends Controller {
   static targets = ["button", "menu"]
 
   connect() {
-    this.buttonTarget.addEventListener("click", () => {
-      this.toggleMenu();
-    });
-
     document.addEventListener("click", (event) => {
       if (!this.element.contains(event.target)) {
         this.closeMenu();
@@ -24,4 +20,7 @@ export default class extends Controller {
     this.menuTarget.classList.add("hidden");
   }
 
+  // hoverMenu() {
+  //   this.menuTarget.classList.toggle("hidden");
+  // }
 }

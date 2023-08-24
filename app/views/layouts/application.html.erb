@@ -11,9 +11,13 @@
   </head>
 
   <body class="bg-slate-100">
-    <main class="container mx-auto px-20">
-      <%= render 'components/navbar' %>
+    <% unless params[:controller] == 'devise/sessions'%>
+      <main class="container mx-auto px-20">
+        <%= render 'components/navbar' %>
+        <%= yield %>
+      </main>
+    <% else %>
       <%= yield %>
-    </main>
+    <% end %>
   </body>
 </html>
