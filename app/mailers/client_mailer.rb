@@ -1,7 +1,7 @@
 class ClientMailer < ApplicationMailer
   def welcome_tenant_email
     @client = params[:client]
-    @url = 'https://immobiliere-francosuisse.fr'
+    @url = 'https://www.google.com/search?q=google+immobiliere+francosuisse&oq=google+immobiliere+francosuisse&aqs=chrome..69i57j69i64l2j69i60.4654j0j4&sourceid=chrome&ie=UTF-8#lrd=0x47f4ea2e24e7d317:0xb72c1bf3b90f226,3,,,,'
     mail(
       # from: 'Service Location <service-location@example.com>',
       to: @client.mail,
@@ -13,7 +13,7 @@ class ClientMailer < ApplicationMailer
 
   def welcome_owner_email
     @client = params[:client]
-    @url = 'https://immobiliere-francosuisse.fr'
+    @url = 'https://www.google.com/search?q=google+immobiliere+francosuisse&oq=google+immobiliere+francosuisse&aqs=chrome..69i57j69i64l2j69i60.4654j0j4&sourceid=chrome&ie=UTF-8#lrd=0x47f4ea2e24e7d317:0xb72c1bf3b90f226,3,,,,'
     mail(
       # from: 'Service Location <service-location@example.com>',
       to: @client.mail,
@@ -31,7 +31,7 @@ class ClientMailer < ApplicationMailer
       to: @client.mail,
       # cc:,
       # bcc:,
-      subject: 'Laissez-nous un commentaire - locataire'
+      subject: 'Bénéficiez de notre offre de parrainage'
     )
   end
 
@@ -43,7 +43,7 @@ class ClientMailer < ApplicationMailer
       to: @client.mail,
       # cc:,
       # bcc:,
-      subject: 'Laissez-nous un commentaire - propriétaire'
+      subject: 'Bénéficiez de notre offre de parrainage'
     )
   end
 end

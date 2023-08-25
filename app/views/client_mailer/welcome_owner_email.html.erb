@@ -4,15 +4,19 @@
     <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
   </head>
   <body>
-    <h1>Bienvenu chez l'Immobilière Franco-Suisse <%= @client.first_name %></h1>
-    <p>
-      Je suis le format html.
-      Nous sommes très heureux de vous compter parmis nos clients.
-      Votre conjoint est <%= @client.roomate %>
-    </p>
-    <p>
-      Pour vous connecter, cliquez sur : <%= @url %>.
-    </p>
-    <p>Merci beaucoup à vous et bonne journée!</p>
+    <h2>Bienvenue chez l'Immobilière Franco-Suisse,</h2>
+
+    <p>Nous tenons à vous remercier pour votre confiance en choisissant l'Immobilière Franco-Suisse pour la gestion de votre bien immobilier. C'est avec un grand enthousiasme que nous accueillons votre propriété dans notre portefeuille.</p>
+
+    <p>Nous nous engageons à prendre soin de votre bien comme s'il s'agissait du nôtre et à répondre à toutes vos questions et pour vous assister à chaque étape du processus de gestion de votre bien.</p>
+
+    <p>Nous croyons fermement en une communication ouverte et en une relation de confiance avec nos propriétaires. C'est pourquoi nous vous encourageons à partager vos préoccupations, vos besoins et vos suggestions. Votre retour est essentiel pour nous aider à répondre à vos attentes de manière optimale.</p>
+
+    <p>Si vous êtes satisfait de notre service, nous serions reconnaissants si vous pouviez prendre quelques instants pour laisser un avis sur notre site web.</p>
+
+    <p>Laissez votre avis dès maintenant en cliquant sur ce lien : <%= link_to "Laissez un avis", @url %>.</p>
+
+    <p>Cordialement,</p>
+    <p><strong>Le service de gestion immobilière</strong><br>L'Immobilière Franco-Suisse</p>
   </body>
 </html>

@@ -1,10 +1,10 @@
 <div class="flex justify-between items-center pt-8 mb-10">
-  <div class="w-2/12">
+  <div class="w-2/12 lg:w-full">
     <%= link_to clients_path do %>
       <img src="https://d36vnx92dgl2c5.cloudfront.net/prod/Cello/2197/media/928fcddfdf203253fb94213d8dbcf1a2.png" alt="logo" width="60%">
     <% end %>
   </div>
-  <h3 class="text-2xl font-bold">Votre espace personnel</h3>
+  <h3 class="text-2xl lg:text-sm font-bold">Votre espace personnel</h3>
   <div class="justify-between items-center flex gap-x-6 text-sm">
     <%= link_to "Dashboard", clients_path%>
     <%= link_to "Ajouter un nouveau client", new_client_path, class: "text-white bg-teal-500 px-4 py-4 drop-shadow rounded-lg hover:bg-teal-600" %>
