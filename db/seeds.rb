@@ -1,9 +1,7 @@
 Client.destroy_all
 User.destroy_all
 
-User.create(email: 'service-location@immobiliere-francosuisse.fr', password: 'ben846jma')
-
-puts 'Users created successfully.'
+#Possibilité de crééer un User en seed ici
 
 puts "Create all of the clients"
 
